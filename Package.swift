@@ -5,7 +5,6 @@ import PackageDescription
 
 let package = Package(
     name: "StatusView",
-    platforms: [.macOS(.v10_10), .iOS(.v8)],
     products: [
         .library(name: "StatusView", targets: ["StatusView"]),
     ],
