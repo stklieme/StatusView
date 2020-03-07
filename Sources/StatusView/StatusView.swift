@@ -19,11 +19,11 @@
 #endif
 
 
-class StatusView: STView {
+public class StatusView: STView {
     
     //MARK: - Enums
     
-    enum Status {
+    public enum Status {
         case none, processing, failed, caution, success
     }
     
@@ -63,7 +63,7 @@ class StatusView: STView {
     
     //MARK: Appearance
     
-    var status : Status = .none {
+    public var status : Status = .none {
         
         willSet {
             DispatchQueue.main.async {
@@ -81,7 +81,7 @@ class StatusView: STView {
         }
     }
     
-    @IBInspectable var inverted : Bool = false {
+    @IBInspectable public var inverted : Bool = false {
         didSet {
             DispatchQueue.main.async {
                 self.updateLayerProperties()
@@ -89,7 +89,7 @@ class StatusView: STView {
         }
     }
     
-    @IBInspectable var enabled : Bool = true {
+    @IBInspectable public var enabled : Bool = true {
         didSet {
             DispatchQueue.main.async {
                 self.updateLayerProperties()
@@ -99,7 +99,7 @@ class StatusView: STView {
     
     //MARK: - Init
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         #if os(macOS)
         wantsLayer = true
@@ -111,7 +111,7 @@ class StatusView: STView {
         mainLayer.addSublayer(shapeLayer)
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder:coder)
         #if os(macOS)
         wantsLayer = true
@@ -125,17 +125,17 @@ class StatusView: STView {
     
     //MARK: - Redraw methods
     #if os(iOS)
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         updateLayouts()
     }
     #else
-    override func layout() {
+    override public func layout() {
         super.layout()
         updateLayouts()
     }
     
-    override func viewDidChangeEffectiveAppearance() {
+    override public func viewDidChangeEffectiveAppearance() {
         guard status == .processing else { return }
         stopProgressIndicator()
         startProgressIndicator()
@@ -252,7 +252,7 @@ class StatusView: STView {
     }
     
     #if os(macOS)
-    func bindEnabled(to object : AnyObject, keyPath : String)
+    public func bindEnabled(to object : AnyObject, keyPath : String)
     {
         #if swift(>=3.3)
         bind(.enabled, to:object, withKeyPath:keyPath)
@@ -261,7 +261,7 @@ class StatusView: STView {
         #endif
     }
     
-    func bindStatus(to object : AnyObject, keyPath : String)
+    public func bindStatus(to object : AnyObject, keyPath : String)
     {
         #if swift(>=3.3)
         bind(NSBindingName(rawValue: "status"), to:object, withKeyPath:keyPath)
@@ -270,7 +270,7 @@ class StatusView: STView {
         #endif
     }
     
-    func bindHide(to object : AnyObject, keyPath : String)
+    public func bindHide(to object : AnyObject, keyPath : String)
     {
         #if swift(>=3.3)
         bind(.hidden, to:object, withKeyPath:keyPath)

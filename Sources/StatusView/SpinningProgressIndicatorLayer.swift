@@ -11,22 +11,22 @@ import UIKit
 import Cocoa
 #endif
 
-class SpinningProgressIndicatorLayer: CALayer {
+public class SpinningProgressIndicatorLayer: CALayer {
     
-    struct AnimationKey {
+    fileprivate struct AnimationKey {
         static let rotation = "rotationAnimation"
         static let fade = "opacity"
     }
     //    let INDETERMINATE_FADE_ANIMATION = true
     
-    struct FinGeometry {
+    fileprivate struct FinGeometry {
         var bounds = CGRect.zero
         var anchorPoint = CGPoint.zero
         var position = CGPoint.zero
         var cornerRadius : CGFloat = 0.0
     }
     
-    struct PieGeometry {
+    fileprivate struct PieGeometry {
         var bounds = CGRect.zero
         var outerEdgeLength : CGFloat = 0.0
         var outlineWidth : CGFloat = 0.0
@@ -55,14 +55,14 @@ class SpinningProgressIndicatorLayer: CALayer {
     fileprivate var initialShadowRadius : CGFloat = 0.0
     fileprivate var initialShadowOffset = CGSize.zero
     
-    var isRunning : Bool
-    var isDeterminate : Bool = false {
+    public var isRunning : Bool
+    public var isDeterminate : Bool = false {
         didSet {
             setupType()
         }
     }
     
-    var color : STColor  { // "copy" because we don't retain it -- we create a CGColor from it
+    public var color : STColor  { // "copy" because we don't retain it -- we create a CGColor from it
         get {
             #if os(macOS)
             return NSColor(cgColor: foreColor)!
@@ -89,7 +89,7 @@ class SpinningProgressIndicatorLayer: CALayer {
     }
     var resizeShadows : Bool
     
-    var doubleValue : Double {
+    public var doubleValue : Double {
         didSet {
             if !determinateTweenTime.isNaN {
                 CATransaction.begin()
@@ -107,7 +107,7 @@ class SpinningProgressIndicatorLayer: CALayer {
     }
     
     // For determinate-mode only.
-    var maxValue : Double = 0.0
+    public var maxValue : Double = 0.0
     
     var determinateProgressOpacity : Float {
         get { return pieChartShape.opacity }
@@ -163,7 +163,7 @@ class SpinningProgressIndicatorLayer: CALayer {
     
     //MARK: - Overrides
     
-    override var bounds : CGRect
+    override public var bounds : CGRect
         {
         didSet {
             // Do the resizing all at once, immediately.
@@ -223,7 +223,7 @@ class SpinningProgressIndicatorLayer: CALayer {
     
     //MARK: - Animation
     
-    func startProgressAnimation()
+    public func startProgressAnimation()
     {
         isRunning = true
         
@@ -231,7 +231,7 @@ class SpinningProgressIndicatorLayer: CALayer {
         animateFinLayers()
     }
     
-    func stopProgressAnimation()
+    public func stopProgressAnimation()
     {
         isRunning = false
         
@@ -239,7 +239,7 @@ class SpinningProgressIndicatorLayer: CALayer {
         finLayersRoot.removeFromSuperlayer()
     }
     
-    func toggleProgressAnimation()
+    public func toggleProgressAnimation()
     {
         if isRunning {
             stopProgressAnimation()
