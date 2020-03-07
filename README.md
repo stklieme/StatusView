@@ -9,8 +9,8 @@ SpinningProgressIndicator is based on [YRKSpinningProgressIndicatorLayer](https:
 
 **Usage**
 
-- Add StatusView.swift and SpinningProgressIndicatorLayer.swift to your project
-- Set the class of the view to StatusView
+- Copy the files into your project or add the package as Package Dependency.
+- Set the class of the view to StatusView.
 - The view is supposed to be square (aspect ratio of 1:1)
 
 <br>
