@@ -25,25 +25,7 @@ All values of `statusIcon` can be displayed *.inverted*
 
 ---
 
-Sample Icon Images
-
-**Normal**
-
-
-<font size=32><span style="color:lightgreen">􀁢</span><span style="color:orange">􀁞</span><span style="color:red">􀁠</span><span style="color:blue">􀁢</span></font>
-
-
-**Inverted**
-
-<font size=32><span style="color:lightgreen">􀁣</span><span style="color:orange">􀁟</span><span style="color:red">􀁡</span><span style="color:blue">􀁣</span></font>
-
-
-
-<br>
-
----
-
 System Requirements:
 
-macOS 10.15 Catalina or higher<br>
-iOS 14 and higher
+macOS 10.11 or higher<br>
+iOS 15 and higher
