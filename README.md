@@ -1,57 +1,49 @@
-# StatusView
-An NSView/UIView subclass to display status icons with Core Animation, written in Swift
-
-SpinningProgressIndicator is based on [YRKSpinningProgressIndicatorLayer](https://github.com/kelan/YRKSpinningProgressIndicatorLayer) by Kelan Champagne
-
-<br>
-
----
-
-**Usage**
-
-- Copy the files into your project or add the package as Package Dependency.
-- Set the class of the view to StatusView.
-- The view is supposed to be square (aspect ratio of 1:1)
+# CircularStatusView
+An SwiftUI view to display (in)determinate progress and status icons
 
 <br>
 
 ---
 
 **Properties**
+- **size**: `CGFloat` The size of the view
+- **status** : `Status` *.none, .indeterminate, .progress(percentage)*, and *.icon(statusIcon)*
+- **color** : `Color` The color of the progressbar
+- **showPercentage** : `Bool` If `true` the percentage of the progress is also displayed
 
-- **status** : *.none, .processing, .failed, .caution* and *.success*
-- **enabled** : Bool *true* or *false* - is the view enabled
-- **inverted** : Bool *true* or *false* - display the symbols (except the spinning indicator) normal or inverted
 
-The properties `inverted` and `enabled` are also settable in Interface Builder.
-The properties `inverted`, `enabled` and `status` can be use with Cocoa Bindings (macOS only).
+**Progress and Icon values**
+- **percentage** `CGFloat` a value between 0.0 and 1.0 representing 0 and 100%
+- **statusIcon** *.failed* (red), *.failedDisabled* (gray),   
+                 *.caution* (orange), *.cautionDisabled* (gray),   
+                 *.success* (green), *.successDisabled* (gray),   
+                 *.completed* (specifed **color**) and *.completedDisabled* (gray)
+
+All values of `statusIcon` can be displayed *.inverted*
 
 <br>
 
 ---
 
-Sample Images
+Sample Icon Images
 
 **Normal**
 
-![failed normal](http://klieme.com/Images/failed.tif)
-![caution normal](http://klieme.com/Images/caution.tif)
-![success normal](http://klieme.com/Images/success.tif)
-![processing](http://klieme.com/Images/processing.png)
+
+<font size=32><span style="color:lightgreen">􀁢</span><span style="color:orange">􀁞</span><span style="color:red">􀁠</span><span style="color:blue">􀁢</span></font>
+
 
 **Inverted**
 
-![failed inverted](http://klieme.com/Images/failed_inverted.tif)
-![caution inverted](http://klieme.com/Images/caution_inverted.tif)
-![success inverted](http://klieme.com/Images/success_inverted.tif)
+<font size=32><span style="color:lightgreen">􀁣</span><span style="color:orange">􀁟</span><span style="color:red">􀁡</span><span style="color:blue">􀁣</span></font>
+
 
 
 <br>
 
 ---
 
-System Requirements
+System Requirements:
 
-
-macOS 10.10 Yosemite or higher
-iOS 8 and higher
+macOS 10.15 Catalina or higher<br>
+iOS 14 and higher

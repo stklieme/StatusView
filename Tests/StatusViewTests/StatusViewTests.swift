@@ -1,14 +1,12 @@
 import XCTest
+import SwiftUI
 @testable import StatusView
 
 final class StatusViewTests: XCTestCase {
-    lazy var statusView = StatusView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+    lazy var statusView = CircularStatusView(size: 64.0, status: .none, color: .blue, showPercentage: false)
     
-    func updateStatus(_ status : StatusView.Status, enabled : Bool = true, inverted: Bool = false) {
+    func updateStatus(_ status : CircularStatusView.Status) {
         statusView.status = status
-        statusView.enabled = enabled
-        statusView.inverted = inverted
-        statusView.updateLayerProperties()
     }
     
     override func setUp() {
@@ -20,117 +18,75 @@ final class StatusViewTests: XCTestCase {
     }
     
     func testSuccess() {
-        updateStatus(.success)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.green)
-        XCTAssertEqual(statusView.borderLayer.strokeColor, StatusView.ShapeColor.green)
-        XCTAssertNil(statusView.borderLayer.fillColor)
-    }
+        updateStatus(.icon(.success()))
+        XCTAssertEqual(statusView.status, .icon(.success()))
+     }
     
     func testCaution() {
-        updateStatus(.caution)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.orange)
-        XCTAssertEqual(statusView.borderLayer.strokeColor, StatusView.ShapeColor.orange)
-        XCTAssertNil(statusView.borderLayer.fillColor)
+        updateStatus(.icon(.caution()))
+        XCTAssertEqual(statusView.status, .icon(.caution()))
     }
     
     func testFailure() {
-        updateStatus(.failed)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.red)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.red)
-        XCTAssertNil(statusView.borderLayer.fillColor)
+        updateStatus(.icon(.failed()))
+        XCTAssertEqual(statusView.status, .icon(.failed()))
     }
     
     func testProcessing() {
-        updateStatus(.processing)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertNil(statusView.borderLayer.fillColor)
+        updateStatus(.progress(0.6))
+        XCTAssertEqual(statusView.status, .progress(0.6))
     }
     
     func testNone() {
         updateStatus(.none)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertNil(statusView.borderLayer.fillColor)
+        XCTAssertEqual(statusView.status, .none)
     }
     
     func testSuccessDisabled() {
-        updateStatus(.success, enabled: false)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertNil(statusView.borderLayer.fillColor)
+        updateStatus(.icon(.successDisabled()))
+        XCTAssertEqual(statusView.status, .icon(.successDisabled()))
     }
     
     func testCautionDisabled() {
-        updateStatus(.caution, enabled: false)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertNil(statusView.borderLayer.fillColor)
+        updateStatus(.icon(.cautionDisabled()))
+        XCTAssertEqual(statusView.status, .icon(.cautionDisabled()))
     }
     
     func testFailureDisabled() {
-        updateStatus(.failed, enabled: false)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertNil(statusView.borderLayer.fillColor)
+        updateStatus(.icon(.failedDisabled()))
+        XCTAssertEqual(statusView.status, .icon(.failedDisabled()))
     }
     
-    // -------------------------------------------------------------
-    
+//    // -------------------------------------------------------------
+//    
     func testSuccessInverted() {
-        updateStatus(.success, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.green)
-        XCTAssertEqual(statusView.borderLayer.strokeColor, StatusView.ShapeColor.green)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.green)
-    }
+        updateStatus(.icon(.success(.inverted)))
+        XCTAssertEqual(statusView.status, .icon(.success(.inverted)))
+     }
     
     func testCautionInverted() {
-        updateStatus(.caution, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.orange)
-        XCTAssertEqual(statusView.borderLayer.strokeColor, StatusView.ShapeColor.orange)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.orange)
+        updateStatus(.icon(.caution(.inverted)))
+        XCTAssertEqual(statusView.status, .icon(.caution(.inverted)))
     }
     
     func testFailureInverted() {
-        updateStatus(.failed, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.red)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.red)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.red)
+        updateStatus(.icon(.failed(.inverted)))
+        XCTAssertEqual(statusView.status, .icon(.failed(.inverted)))
     }
-    
-    func testProcessingInverted() {
-        updateStatus(.processing, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.clear)
-    }
-    
-    func testNoneInverted() {
-        updateStatus(.none, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.clear)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.clear)
-    }
-    
+        
     func testSuccessDisabledInverted() {
-        updateStatus(.success, enabled: false, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.gray)
+        updateStatus(.icon(.successDisabled(.inverted)))
+        XCTAssertEqual(statusView.status, .icon(.successDisabled(.inverted)))
     }
     
     func testCautionDisabledInverted() {
-        updateStatus(.caution, enabled: false, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.gray)
+        updateStatus(.icon(.cautionDisabled(.inverted)))
+        XCTAssertEqual(statusView.status, .icon(.cautionDisabled(.inverted)))
     }
     
     func testFailureDisabledInverted() {
-        updateStatus(.failed, enabled: false, inverted: true)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.shapeColor, StatusView.ShapeColor.gray)
-        XCTAssertEqual(statusView.borderLayer.fillColor, StatusView.ShapeColor.gray)
+        updateStatus(.icon(.failedDisabled(.inverted)))
+        XCTAssertEqual(statusView.status, .icon(.failedDisabled(.inverted)))
     }
     
 }
