@@ -32,9 +32,9 @@ public struct CircularStatusView: View {
         }
     }
     
-    public enum Appearance { case normal, inverted }
+    public enum Appearance: Sendable { case normal, inverted }
     
-    public enum StatusIcon : Equatable {
+    public enum StatusIcon : Equatable, Sendable {
         case failed(Appearance = .normal)
         case failedDisabled(Appearance = .normal)
         case caution(Appearance = .normal)
@@ -45,7 +45,7 @@ public struct CircularStatusView: View {
         case completedDisabled(Appearance = .normal)
     }
     
-    public enum Status : Equatable {
+    public enum Status : Equatable, Sendable {
         case none, indeterminate, progress(CGFloat), icon(StatusIcon)
     }
     
