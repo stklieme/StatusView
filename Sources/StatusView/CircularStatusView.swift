@@ -50,9 +50,16 @@ public struct CircularStatusView: View {
     }
     
     public let size : CGFloat
-    public var status: Status = .none
-    public var color : Color = .blue
-    public var showPercentage = false
+    public var status: Status
+    public var color : Color
+    public var showPercentage : Bool
+    
+    public init(size: CGFloat, status: Status = .none, color: Color = .blue, showPercentage: Bool = false) {
+        self.size = size
+        self.status = status
+        self.color = color
+        self.showPercentage = showPercentage
+    }
     
     @State private var degrees = 0
     
